@@ -44,7 +44,7 @@ export default function UploadSection({ onExtracted }: Props) {
         const formData = new FormData();
         formData.append('file', file!);
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/documents/upload`, formData);
+            const res = await axios.post(`${import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:8000' : 'https://ai-study-buddy-backend-omega.vercel.app')}/api/documents/upload`, formData);
             if (res.data.success) {
                 onExtracted(res.data.data.content, file!.name);
             } else {

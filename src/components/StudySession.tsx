@@ -57,7 +57,7 @@ export default function StudySession({ content, title = "Study Session", deckId 
 
         const generate = async () => {
             try {
-                const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/flashcards/generate`, { content, num_cards: 15 });
+                const res = await axios.post(`${import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:8000' : 'https://ai-study-buddy-backend-omega.vercel.app')}/api/flashcards/generate`, { content, num_cards: 15 });
                 if (res.data.success) {
                     const cards = res.data.data.flashcards;
                     setFlashcards(cards);
@@ -118,7 +118,7 @@ export default function StudySession({ content, title = "Study Session", deckId 
     }, [currentCard, stats, currentDeckId]);
 
     const handleExportAnki = async () => {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/export/anki`, { flashcards }, { responseType: 'blob' });
+        const res = await axios.post(`${import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:8000' : 'https://ai-study-buddy-backend-omega.vercel.app')}/api/export/anki`, { flashcards }, { responseType: 'blob' });
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement('a');
         link.href = url;
@@ -128,7 +128,7 @@ export default function StudySession({ content, title = "Study Session", deckId 
     };
 
     const handleExportPDF = async () => {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/export/pdf`, { flashcards }, { responseType: 'blob' });
+        const res = await axios.post(`${import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:8000' : 'https://ai-study-buddy-backend-omega.vercel.app')}/api/export/pdf`, { flashcards }, { responseType: 'blob' });
         const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
         const link = document.createElement('a');
         link.href = url;
